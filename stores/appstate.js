@@ -26,6 +26,10 @@ export default class AppState {
     return this.todos.filter(todo => todo.completed).length
   }
 
+  @computed get activeCount() {
+    return this.odos.length - this.completedCount
+  }
+
   findTodo(id) {
     return this.todos.find(todo => todo.id === id)
   }
