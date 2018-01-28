@@ -2,7 +2,7 @@
   "name": "weivjs-todomvc",
   "version": "1.0.0",
   "description": "Boilerplate for MobX + Weiv project with JSX, ES6 compilation and hot code reloading",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "build": "NODE_ENV=production webpack --config webpack.config.production.js",
     "start": "node server.js",
