@@ -5,7 +5,7 @@ import TodoTextInput from './TodoTextInput'
   template: `
   <header class="header">
     <h1>todos</h1>
-    <todo-text-input newTodo="true"
+    <todo-text-input newtodo="true"
                    @on:save="handleSave"
                    placeholder="What needs to be done?" />
   </header>

@@ -1,4 +1,5 @@
 import { Component } from 'weivjs'
+import _ from 'lodash'
 // import classnames from 'classnames'
 import { SHOW_ALL, SHOW_COMPLETED, SHOW_ACTIVE } from '../stores/appstate'
 
@@ -6,14 +7,15 @@ import { SHOW_ALL, SHOW_COMPLETED, SHOW_ACTIVE } from '../stores/appstate'
   template: `
   <footer class="footer">
     <span class="todo-count">
-      <strong>{{store.activeCount || 'No'}}</strong> {{store.activeCount === 1 ? 'item' : 'items'}} left
+      <strong>{{activeCount}}</strong> {{plural}} left
     </span>
     <ul class="filters">
-        <li key={filter} @for:filter="filters">
-          <a @bind:class="filter === store.filter ? 'selected' : ''"
+        <li @for:filter="filters">
+          <a @bind:class="{selected: filter == store.filter}"
             style="cursor: 'pointer'"
+            @bind:name="filter"
             onclick="handleSetFilter">
-            {titles[filter]}
+            {{titles[filter]}}
           </a>
         </li>
     </ul>
@@ -31,14 +33,18 @@ import { SHOW_ALL, SHOW_COMPLETED, SHOW_ACTIVE } from '../stores/appstate'
 class Footer {
 
   filters = [SHOW_ALL, SHOW_ACTIVE, SHOW_COMPLETED]
-  titles = {
-    SHOW_ALL: 'All',
-    SHOW_ACTIVE: 'Active',
-    SHOW_COMPLETED: 'Completed'
+  titles = _.zipObject(this.filters, ['All', 'Active', 'Completed'])
+
+  get activeCount() {
+    return this.store.activeCount || 'No'
   }
 
-  handleSetFilter() { // TODO how to pass params to event handler??
-    // this.store.setFilter(filter)
+  get plural() {
+    return this.store.activeCount === 1 ? ' item' : ' items'
+  }
+
+  handleSetFilter(e) { // TODO how to pass params to event handler??
+    this.store.setFilter(e.target.name)
   }
 
   handleClearCompleted() {

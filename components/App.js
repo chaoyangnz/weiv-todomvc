@@ -1,14 +1,13 @@
 import {Component} from 'weivjs'
 import Header from './Header'
 import MainSection from './MainSection'
-import store from '../stores/appstate'
 
 @Component({
   template: `
-  <div>
-    <todo-header store={store} />
-    <todo-main-section store={store} />
-  </div>
+  <section class="todoapp">
+    <todo-header @bind:store="store"></todo-header>
+    <todo-main-section @bind:store="store"></todo-main-section>
+  </section>
   `,
   props: {
     store: { type: 'any', required: true }

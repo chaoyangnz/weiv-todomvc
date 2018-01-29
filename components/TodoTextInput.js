@@ -2,11 +2,11 @@ import { Component, observable } from 'weivjs'
 
 @Component({
   template: `
-  <input @bind:class="{edit: this.editing,'new-todo': this.newTodo}"
+  <input @bind:class="{edit: editing, newtodo: newtodo}"
          type="text"
          @bind:placeholder="placeholder"
          autofocus="true"
-         @bind:value="value"
+         @bind:value="text || value"
          onblur="handleBlur"
          onchange="handleChange"
          onkeydown="handleSubmit" />
@@ -15,7 +15,7 @@ import { Component, observable } from 'weivjs'
     text: { type: 'string' },
     placeholder: { type: 'string' },
     editing: { type: 'boolean' },
-    newTodo: { type: 'boolean' }
+    newtodo: { type: 'boolean' }
   },
   events: {
     save: { type: 'function' }
@@ -28,7 +28,7 @@ class TodoTextInput {
     const value = e.target.value.trim()
     if (e.which === 13) {
       this.$emit('save', value)
-      if (this.newTodo) {
+      if (this.newtodo) {
         this.value = ''
       }
     }
@@ -39,7 +39,7 @@ class TodoTextInput {
   }
 
   handleBlur = (e) => {
-    if (!this.props.newTodo) {
+    if (!this.newtodo) {
       this.$emit('save', e.target.value)
     }
   }

@@ -6,7 +6,7 @@ import Footer from './Footer'
   template: `
   <input class="toggle-all"
     type="checkbox"
-    checked="store.completedCount === store.todos.length"
+    @bind:checked="store.completedCount == store.todos.length"
     onchange="onChange" />
   `,
   props: {
@@ -21,8 +21,8 @@ class ToggleAll {
 
 @Component({
   template: `
-  <ul className="todo-list">
-    <todo-item @for:todo="store.visibleTodos" todo={todo} store={store} />
+  <ul class="todo-list">
+    <todo-item @for:todo="store.visibleTodos" @bind:todo="todo" @bind:store="store"></todo-item>
   </ul>
   `,
   props: {
@@ -35,11 +35,11 @@ class ToggleAll {
 class TodoList {}
 
 @Component({
-  tempate: `
-  <section className="main">
-    {store.todos.length ? <todo-toggle-all store={store} /> : null}
-    <todo-list store={store} />
-    {store.todos.length ? <todo-footer store={store} /> : null}
+  template: `
+  <section class="main">
+    <todo-toggle-all @bind:store="store" @if="store.todos.length > 0"></todo-toggle-all>
+    <todo-list @bind:store="store"></todo-list>
+    <todo-footer @bind:store="store" @if="store.todos.length > 0"></todo-footer>
   </section>
   `,
   props: {
@@ -51,6 +51,6 @@ class TodoList {}
     'todo-footer': Footer
   }
 })
-class MainSection extends Component {}
+class MainSection {}
 
 export default MainSection
